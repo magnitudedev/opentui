@@ -1625,7 +1625,9 @@ export class RootRenderable extends Renderable {
 
     // 0. Run lifecycle pass
     for (const renderable of this._ctx.getLifecyclePasses()) {
-      renderable.onLifecyclePass?.call(renderable)
+      if (!renderable.isDestroyed) {
+        renderable.onLifecyclePass?.call(renderable)
+      }
     }
 
     // NOTE: Strictly speaking, this is a 3-pass rendering process:
